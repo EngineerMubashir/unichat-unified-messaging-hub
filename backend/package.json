@@ -1,0 +1,40 @@
+{
+  "name": "whatsapp-cloudapi-quick-start",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "description": "An example webhook for WhatsApp Cloud API quick start tutorial.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "WhatsApp",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^4.18.1",
+    "form-data": "^4.0.4",
+    "multer": "^2.0.2",
+    "mysql2": "^3.14.3",
+    "node-fetch": "^2.7.0",
+    "request": "^2.88.2",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techinoviq9000/whatsappwebhook.git"
+  },
+  "bugs": {
+    "url": "https://github.com/techinoviq9000/whatsappwebhook/issues"
+  },
+  "homepage": "https://github.com/techinoviq9000/whatsappwebhook#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

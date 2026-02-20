@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>UniChat - Messenger</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; margin: 0; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .chat-container { width: 400px; height: 600px; background: #fff; display: flex; flex-direction: column; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); overflow: hidden; }
+    .chat-header { background: #0084ff; color: white; padding: 15px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .chat-messages { flex: 1; padding: 10px; overflow-y: auto; background: #eceff1; }
+    .msg { max-width: 75%; margin-bottom: 8px; padding: 8px 12px; border-radius: 8px; font-size: 14px; line-height: 1.4; position: relative; word-wrap: break-word; clear: both; }
+    .from-me { background: #d1e7ff; float: right; }
+    .from-them { background: white; float: left; }
+    .status { font-size: 11px; color: gray; margin-left: 5px; }
+    .timestamp { font-size: 11px; color: gray; text-align: right; margin-top: 2px; }
+    .chat-input { display: flex; border-top: 1px solid #ddd; padding: 8px; background: #f0f0f0; align-items: center; }
+    .chat-input textarea { flex: 1; resize: none; border: none; border-radius: 20px; padding: 10px; font-size: 14px; outline: none; background: white; height: 40px; }
+    .chat-input button { background: #0084ff; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; margin-left: 5px; cursor: pointer; font-size: 18px; }
+    .attach-label { margin-right: 5px; cursor: pointer; font-size: 20px; }
+    input[type="file"] { display: none; }
+    img, video { border-radius: 8px; margin-top: 5px; max-width: 200px; }
+    audio { margin-top: 5px; }
+    /* Recorder */
+    .recorder { display: flex; align-items: center; margin-left: 5px; }
+    .recording { color: red; font-size: 13px; margin-left: 5px; }
+    canvas { height: 40px; width: 100px; margin-left: 5px; }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      Messenger - UniChat
+      <div>
+        <label for="fileUpload" class="attach-label">📎</label>
+        <input type="file" id="fileUpload" onchange="sendMedia(event)" />
+      </div>
+    </div>
+    <div id="messages" class="chat-messages"></div>
+    <div class="chat-input">
+      <textarea id="message" placeholder="Type a message"></textarea>
+      <button onclick="sendMessage()">➤</button>
+      <div class="recorder">
+        <button id="micBtn">🎙️</button>
+        <span id="timer" class="recording"></span>
+        <canvas id="waveform"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      const message = document.getElementById("message").value.trim();
+      if (!message) return;
+      await fetch("/messenger/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: message })
+      });
+      document.getElementById("message").value = "";
+      fetchMessages();
+    }
+
+    async function sendMedia(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append(
+        "type",
+        file.type.startsWith("image") ? "image" :
+        file.type.startsWith("video") ? "video" :
+        file.type.startsWith("audio") ? "audio" : "file"
+      );
+      formData.append("caption", file.name);
+      await fetch("/messenger/send-media", { method: "POST", body: formData });
+      fetchMessages();
+    }
+
+    async function fetchMessages() {
+      const [sentRes, recvRes] = await Promise.all([fetch("/messenger/sent"), fetch("/messenger/received")]);
+      const sent = await sentRes.json();
+      const received = await recvRes.json();
+      const all = [...sent.map(m => ({ ...m, from: "me" })), ...received.map(m => ({ ...m, from: "them" }))];
+      all.sort((a, b) => a.timestamp - b.timestamp);
+
+      const msgDiv = document.getElementById("messages");
+      msgDiv.innerHTML = "";
+
+      all.forEach(m => {
+        const div = document.createElement("div");
+        div.classList.add("msg", m.from === "me" ? "from-me" : "from-them");
+
+        if (m.type === "text") div.textContent = m.text;
+        else if (m.type === "image") { const img=document.createElement("img"); img.src=m.media_url; div.appendChild(img); }
+        else if (m.type === "audio") { const audio=document.createElement("audio"); audio.src=m.media_url; audio.controls=true; div.appendChild(audio); }
+        else if (m.type === "video") { const video=document.createElement("video"); video.src=m.media_url; video.controls=true; div.appendChild(video); }
+        else { const link=document.createElement("a"); link.href=m.media_url; link.textContent=m.caption||"📄 File"; link.target="_blank"; div.appendChild(link); }
+
+        const timeDiv=document.createElement("div");
+        timeDiv.classList.add("timestamp");
+        const date=new Date(m.timestamp);
+        let h=date.getHours(), min=String(date.getMinutes()).padStart(2,"0"), ampm=h>=12?"PM":"AM";
+        h=h%12||12;
+        timeDiv.textContent=`${h}:${min} ${ampm}`;
+        div.appendChild(timeDiv);
+
+        msgDiv.appendChild(div);
+      });
+
+      msgDiv.scrollTop = msgDiv.scrollHeight;
+    }
+
+    setInterval(fetchMessages, 3000);
+    fetchMessages();
+
+    /* ===== 🎙️ Voice Recorder with Waveform ===== */
+    let mediaRecorder, audioChunks = [], timerInterval, seconds = 0;
+    const micBtn = document.getElementById("micBtn");
+    const timer = document.getElementById("timer");
+    const canvas = document.getElementById("waveform");
+    const ctx = canvas.getContext("2d");
+    let audioCtx, analyser, source, dataArray;
+
+    micBtn.addEventListener("click", async () => {
+      if (!mediaRecorder || mediaRecorder.state === "inactive") {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        source = audioCtx.createMediaStreamSource(stream);
+        source.connect(analyser);
+        dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+        mediaRecorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
+        mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+        mediaRecorder.onstop = sendRecording;
+        mediaRecorder.start();
+
+        seconds = 0;
+        timerInterval = setInterval(() => {
+          seconds++;
+          const m = String(Math.floor(seconds/60)).padStart(2,"0");
+          const s = String(seconds%60).padStart(2,"0");
+          timer.textContent = `${m}:${s}`;
+        }, 1000);
+
+        drawWaveform();
+        micBtn.textContent = "⏹️"; // stop btn
+      } else {
+        mediaRecorder.stop();
+        clearInterval(timerInterval);
+        timer.textContent = "";
+        micBtn.textContent = "🎙️";
+      }
+    });
+
+    function drawWaveform() {
+      requestAnimationFrame(drawWaveform);
+      if (!analyser) return;
+      analyser.getByteFrequencyData(dataArray);
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = "#0084ff";
+      for (let i=0; i<20; i++) {
+        const barHeight = dataArray[i] / 5;
+        ctx.fillRect(i*5, canvas.height-barHeight, 3, barHeight);
+      }
+    }
+
+    async function sendRecording() {
+      const blob = new Blob(audioChunks, { type: "audio/webm" });
+      audioChunks = [];
+      const file = new File([blob], "voice.ogg", { type: "audio/ogg" }); // ✅ convert to OGG
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("type", "audio");
+      formData.append("caption", "Voice message");
+      await fetch("/messenger/send-media", { method: "POST", body: formData });
+      fetchMessages();
+    }
+  </script>
+</body>
+</html>

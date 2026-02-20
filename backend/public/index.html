@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>UniChat - WhatsApp</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        background: #e5ddd5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .chat-container {
+        width: 400px;
+        height: 600px;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+      }
+      .chat-header {
+        background: #075e54;
+        color: white;
+        padding: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .chat-messages {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        background: #ece5dd;
+      }
+      .msg {
+        max-width: 75%;
+        margin-bottom: 8px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 14px;
+        line-height: 1.4;
+        position: relative;
+        word-wrap: break-word;
+        clear: both;
+      }
+      .from-me {
+        background: #dcf8c6;
+        float: right;
+      }
+      .from-them {
+        background: white;
+        float: left;
+      }
+      .status {
+        font-size: 11px;
+        color: gray;
+        margin-left: 5px;
+      }
+      .timestamp {
+        font-size: 11px;
+        color: gray;
+        text-align: right;
+        margin-top: 2px;
+      }
+      .reactions {
+        font-size: 14px;
+        margin-left: 5px;
+        cursor: pointer;
+      }
+      .reaction-bar {
+        display: none;
+        position: absolute;
+        bottom: 100%;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        padding: 3px 5px;
+      }
+      .reaction-bar span {
+        margin: 0 3px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .chat-input {
+        display: flex;
+        border-top: 1px solid #ddd;
+        padding: 8px;
+        background: #f0f0f0;
+        align-items: center;
+      }
+      .chat-input textarea {
+        flex: 1;
+        resize: none;
+        border: none;
+        border-radius: 20px;
+        padding: 10px;
+        font-size: 14px;
+        outline: none;
+        background: white;
+        height: 40px;
+      }
+      .chat-input button {
+        background: #075e54;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin-left: 5px;
+        cursor: pointer;
+        font-size: 18px;
+      }
+      .attach-label, .record-label {
+        margin-right: 5px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      input[type="file"] {
+        display: none;
+      }
+      img, video {
+        border-radius: 8px;
+        margin-top: 5px;
+        max-width: 200px;
+      }
+      audio {
+        margin-top: 5px;
+      }
+      a {
+        color: #075e54;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-container">
+      <div class="chat-header">
+        WhatsApp - UniChat
+        <div>
+          <label for="fileUpload" class="attach-label">📎</label>
+          <input type="file" id="fileUpload" onchange="sendMedia(event)" />
+          <button id="recordBtn" class="record-label">🎤</button>
+        </div>
+      </div>
+      <div id="messages" class="chat-messages"></div>
+      <div class="chat-input">
+        <textarea id="message" placeholder="Type a message"></textarea>
+        <button onclick="sendMessage()">➤</button>
+      </div>
+    </div>
+
+    <script>
+      let mediaRecorder;
+      let audioChunks = [];
+      let recording = false;
+
+      const recordBtn = document.getElementById("recordBtn");
+      recordBtn.addEventListener("click", async () => {
+        if (!recording) {
+          recording = true;
+          recordBtn.style.background = "red";
+
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          mediaRecorder.start();
+
+          audioChunks = [];
+          mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+          mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: "audio/mp3" });
+            const formData = new FormData();
+            formData.append("file", audioBlob, "voice.mp3");
+            formData.append("type", "audio");
+            formData.append("caption", "Voice Message");
+
+            fetch("/whatsapp/send-media", { method: "POST", body: formData })
+              .then(() => fetchMessages())
+              .catch(err => console.error("Error sending audio:", err));
+          };
+        } else {
+          recording = false;
+          recordBtn.style.background = "";
+          mediaRecorder.stop();
+        }
+      });
+
+      async function sendMessage() {
+        const message = document.getElementById("message").value.trim();
+        if (!message) return;
+
+        await fetch("/whatsapp/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: message }),
+        });
+        document.getElementById("message").value = "";
+        fetchMessages();
+      }
+
+      async function sendMedia(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append(
+          "type",
+          file.type.startsWith("image") ? "image" :
+          file.type.startsWith("video") ? "video" :
+          file.type.startsWith("audio") ? "audio" : "document"
+        );
+        formData.append("caption", file.name);
+
+        await fetch("/whatsapp/send-media", { method: "POST", body: formData });
+        fetchMessages();
+      }
+
+      async function fetchMessages() {
+        const [sentRes, recvRes] = await Promise.all([fetch("/whatsapp/sent"), fetch("/whatsapp/received")]);
+        const sent = await sentRes.json();
+        const received = await recvRes.json();
+
+        const all = [...sent.map(m => ({ ...m, from: "me" })), ...received.map(m => ({ ...m, from: "them" }))];
+        all.sort((a, b) => a.timestamp - b.timestamp);
+
+        const msgDiv = document.getElementById("messages");
+        msgDiv.innerHTML = "";
+
+        all.forEach(m => {
+          const div = document.createElement("div");
+          div.classList.add("msg", m.from === "me" ? "from-me" : "from-them");
+
+          // content
+          if (m.type === "text") div.textContent = m.text;
+          else if (m.type === "image") {
+            const img = document.createElement("img"); img.src = m.media_url; div.appendChild(img);
+            if (m.caption) { const cap = document.createElement("div"); cap.textContent = m.caption; cap.style.fontSize="12px"; div.appendChild(cap); }
+          }
+          else if (m.type === "audio") { const audio = document.createElement("audio"); audio.src=m.media_url; audio.controls=true; div.appendChild(audio); }
+          else if (m.type === "video") { const video = document.createElement("video"); video.src=m.media_url; video.controls=true; div.appendChild(video); }
+          else if (m.type === "document") { const link=document.createElement("a"); link.href=m.media_url; link.textContent=m.caption||"📄 Document"; link.target="_blank"; div.appendChild(link); }
+          else if (m.type === "contacts") { div.textContent=`📇 ${m.contact_name||"Unknown"} (${m.contact_phone||"No Number"})`; }
+
+          // timestamp
+          const timeDiv = document.createElement("div");
+          timeDiv.classList.add("timestamp");
+          const date = new Date(m.timestamp);
+          let hours = date.getHours();
+          const minutes = String(date.getMinutes()).padStart(2,"0");
+          const ampm = hours >= 12 ? "PM":"AM";
+          hours = hours%12||12;
+          timeDiv.textContent=`${hours}:${minutes} ${ampm}`;
+          div.appendChild(timeDiv);
+
+          // status
+          if(m.from==="me" && m.status){
+            const span=document.createElement("span");
+            span.classList.add("status");
+            if(m.status==="sent") span.textContent="✓";
+            if(m.status==="delivered") span.textContent="✓✓";
+            if(m.status==="read"){ span.textContent="✓✓"; span.style.color="blue"; }
+            div.appendChild(span);
+          }
+
+          
+
+          msgDiv.appendChild(div);
+        });
+
+        msgDiv.scrollTop = msgDiv.scrollHeight;
+      }
+
+      setInterval(fetchMessages, 3000);
+      fetchMessages();
+    </script>
+  </body>
+</html>

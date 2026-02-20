@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Facebook Post Manager</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    form { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+    h2 { margin-top: 0; }
+    input, textarea { width: 100%; margin: 8px 0; padding: 8px; }
+    button { padding: 8px 16px; background: #4267B2; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #365899; }
+  </style>
+</head>
+<body>
+  <h1>🚀 Facebook Page Posting</h1>
+
+  <!-- Text Post -->
+  <form action="/fb/webhook/text" method="POST">
+    <h2>Text Post</h2>
+    <textarea name="message" placeholder="Write your post..." required></textarea>
+    <button type="submit">Post Text</button>
+  </form>
+
+  <!-- Photo Post -->
+  <form action="/fb/webhook/photo" method="POST" enctype="multipart/form-data">
+    <h2>Photo Post</h2>
+    <input type="file" name="photo" accept="image/*" required />
+    <input type="text" name="caption" placeholder="Photo caption (optional)" />
+    <button type="submit">Post Photo</button>
+  </form>
+
+  <!-- Video Post -->
+  <form action="/fb/webhook/video" method="POST" enctype="multipart/form-data">
+    <h2>Video Post</h2>
+    <input type="file" name="video" accept="video/*" required />
+    <input type="text" name="description" placeholder="Video description (optional)" />
+    <button type="submit">Post Video</button>
+  </form>
+</body>
+</html>
