@@ -39,11 +39,11 @@ ________________________________________
 
 <img width="739" height="556" alt="image" src="https://github.com/user-attachments/assets/5120bb63-533f-4f58-a53b-1ff4f0839390" />
 
-#Sequence Diagram
+## Sequence Diagram
 
 <img width="398" height="593" alt="image" src="https://github.com/user-attachments/assets/f6fe97c6-7737-449f-98ec-1d63dbed6cbc" />
 
-#Class Diagram
+## Class Diagram
 
 <img width="792" height="445" alt="image" src="https://github.com/user-attachments/assets/414575be-1e9e-47a6-9358-a2162a598b75" />
 
