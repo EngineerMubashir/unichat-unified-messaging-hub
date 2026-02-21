@@ -239,7 +239,8 @@ You may modify and extend it according to your needs.
 <img width="631" height="1266" alt="image" src="https://github.com/user-attachments/assets/bdf247b4-6496-4187-b558-b5133e04e255" />
 <img width="589" height="1200" alt="image" src="https://github.com/user-attachments/assets/5cc9cc0a-e91a-4419-a95c-d55981a7e320" />
 
-#Refrences 
+## Refrences 
+
 [1] Meta for Developers, “WhatsApp Cloud API Documentation,” Meta Platforms, Inc. [Online]. Available: https://developers.facebook.com/docs/whatsapp/cloud-api. [Accessed: 2025-04-07].
 [2] Meta for Developers, “Messenger Platform Documentation,” Meta Platforms, Inc. [Online]. Available: https://developers.facebook.com/docs/messenger-platform. [Accessed: 2025-04-20].
 [3] React Native Documentation. “Getting Started — React Native.” [Online]. Available: https://reactnative.dev/docs/getting-started. [Accessed: 2025-05-11].
