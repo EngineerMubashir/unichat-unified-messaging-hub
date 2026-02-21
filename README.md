@@ -1,4 +1,5 @@
 UniChat – Unified Messaging Platform (API-Based)
+
 📌 Overview
 UniChat is a unified messaging platform designed to integrate WhatsApp Cloud API and Facebook Messenger API into a single centralized system. The project was developed as a Final Year Project (FYP) to address the problem of fragmented communication across multiple messaging platforms.
 Unlike matrix-based or protocol-bridging systems, UniChat is purely API-based, relying on official platform APIs and webhooks to send, receive, and manage messages securely and efficiently.
