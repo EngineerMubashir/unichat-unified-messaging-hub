@@ -219,7 +219,29 @@ This project was developed as a Final Year Project (FYP) thesis focusing on:
 •	Scalable backend design
 •	Mobile-first interface development
 ________________________________________
-🏁 Conclusion
+
+## 🛠 Tech Stack
+
+Backend:
+- Node.js
+- Express.js
+
+Database:
+- MongoDB
+
+APIs:
+- Meta WhatsApp Cloud API
+- Facebook Messenger Graph API
+
+Deployment:
+- AWS EC2 (Linux)
+- ngrok
+
+Other:
+- RESTful APIs
+- Webhooks
+
+## 🏁 Conclusion
 
 UniChat successfully demonstrates how fragmented communication platforms can be unified using official APIs within a secure, scalable, and modular architecture. The system reduces context switching, improves message management, and provides a foundation for intelligent communication systems.
 While limitations exist due to platform API policies and rate limits, the architecture is robust enough for future expansion and production-level enhancements.
@@ -266,6 +288,12 @@ You may modify and extend it according to your needs.
 [12] OWASP, “OWASP Top Ten — The Ten Most Critical Web Application Security Risks.” [Online]. Available: https://owasp.org/www-project-top-ten/. [Accessed: 2025-08-02].
 
 [13] Chatwoot, “Chatwoot Documentation (Open-Source Customer Support).” [Online]. Available: https://www.chatwoot.com/docs. [Accessed: 2025-08-10].
+
+## 👨‍💻 Author
+
+Muhammad Mubashir
+Backend & Full-Stack Developer
+Laravel | Node.js | AWS | API Integrations
 
 [14] Twilio, “Twilio Conversations API (for comparison).” [Online]. Available: https://www.twilio.com/docs/conversations. [Accessed: 2025-08-18].
 
