@@ -289,13 +289,14 @@ You may modify and extend it according to your needs.
 
 [13] Chatwoot, “Chatwoot Documentation (Open-Source Customer Support).” [Online]. Available: https://www.chatwoot.com/docs. [Accessed: 2025-08-10].
 
+[14] Twilio, “Twilio Conversations API (for comparison).” [Online]. Available: https://www.twilio.com/docs/conversations. [Accessed: 2025-08-18].
+
+
 ## 👨‍💻 Author
 
 Muhammad Mubashir
 Backend & Full-Stack Developer
 Laravel | Node.js | AWS | API Integrations
-
-[14] Twilio, “Twilio Conversations API (for comparison).” [Online]. Available: https://www.twilio.com/docs/conversations. [Accessed: 2025-08-18].
 
 
 
