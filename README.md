@@ -28,16 +28,23 @@ ________________________________________
 🏗 System Architecture
 
 #Architecture Diagram
+
 <img width="1090" height="613" alt="image" src="https://github.com/user-attachments/assets/fa380f08-83be-4bcf-82bc-d523be7f24e4" />
 
 #ERD Diagram
+
 <img width="504" height="379" alt="image" src="https://github.com/user-attachments/assets/6ac7713c-a232-48f7-9f03-02846f93adee" />
+
 #DFD Diagram
+
 <img width="739" height="556" alt="image" src="https://github.com/user-attachments/assets/5120bb63-533f-4f58-a53b-1ff4f0839390" />
 
 #Sequence Diagram
+
 <img width="398" height="593" alt="image" src="https://github.com/user-attachments/assets/f6fe97c6-7737-449f-98ec-1d63dbed6cbc" />
+
 #Class Diagram
+
 <img width="792" height="445" alt="image" src="https://github.com/user-attachments/assets/414575be-1e9e-47a6-9358-a2162a598b75" />
 
 
@@ -224,6 +231,7 @@ This project is developed for academic and research purposes.
 You may modify and extend it according to your needs.
 
 #Outputs 
+
 <img width="621" height="1266" alt="image" src="https://github.com/user-attachments/assets/f3419666-8971-4285-9478-22fd744e6154" />
 <img width="585" height="1200" alt="image" src="https://github.com/user-attachments/assets/2803bfdf-6a3e-4258-a32a-8ed25c5c7046" />
 <img width="626" height="1266" alt="image" src="https://github.com/user-attachments/assets/bcfc23b1-bf21-4128-87c6-39c69d441940" />
