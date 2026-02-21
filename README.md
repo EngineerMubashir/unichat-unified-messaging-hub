@@ -242,18 +242,31 @@ You may modify and extend it according to your needs.
 ## Refrences 
 
 [1] Meta for Developers, “WhatsApp Cloud API Documentation,” Meta Platforms, Inc. [Online]. Available: https://developers.facebook.com/docs/whatsapp/cloud-api. [Accessed: 2025-04-07].
+
 [2] Meta for Developers, “Messenger Platform Documentation,” Meta Platforms, Inc. [Online]. Available: https://developers.facebook.com/docs/messenger-platform. [Accessed: 2025-04-20].
+
 [3] React Native Documentation. “Getting Started — React Native.” [Online]. Available: https://reactnative.dev/docs/getting-started. [Accessed: 2025-05-11].
+
 [4] Node.js Foundation, “Node.js Documentation.” [Online]. Available: https://nodejs.org/en/docs/. [Accessed: 2025-05-22].
+
 [5] Express.js, “Express — Node.js web application framework.” [Online]. Available: https://expressjs.com/. [Accessed: 2025-06-03].
+
 [6] MongoDB Inc., “MongoDB Manual.” [Online]. Available: https://docs.mongodb.com/manual/. [Accessed: 2025-06-14].
+
 [7] Socket.IO, “Socket.IO Documentation.” [Online]. Available: https://socket.io/docs/. [Accessed: 2025-06-28].
+
 [8] D. Bradley et al., “JSON Web Token (JWT),” RFC 7519, Internet Engineering Task Force (IETF), May 2015. [Online]. Available: https://tools.ietf.org/html/rfc7519. [Accessed: 2025-07-04].
+
 [9] D. Hardt, “The OAuth 2.0 Authorization Framework,” RFC 6749, Internet Engineering Task Force (IETF), Oct. 2012. [Online]. Available: https://tools.ietf.org/html/rfc6749. [Accessed: 2025-07-15].
+
 [10] Postman Inc., “Postman Documentation.” [Online]. Available: https://learning.postman.com/docs/. [Accessed: 2025-07-23].
+
 [11] GitHub, “GitHub Actions Documentation.” [Online]. Available: https://docs.github.com/actions. [Accessed: 2025-07-30].
+
 [12] OWASP, “OWASP Top Ten — The Ten Most Critical Web Application Security Risks.” [Online]. Available: https://owasp.org/www-project-top-ten/. [Accessed: 2025-08-02].
+
 [13] Chatwoot, “Chatwoot Documentation (Open-Source Customer Support).” [Online]. Available: https://www.chatwoot.com/docs. [Accessed: 2025-08-10].
+
 [14] Twilio, “Twilio Conversations API (for comparison).” [Online]. Available: https://www.twilio.com/docs/conversations. [Accessed: 2025-08-18].
 
 
