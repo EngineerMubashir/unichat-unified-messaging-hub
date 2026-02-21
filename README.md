@@ -6,6 +6,7 @@ Unlike matrix-based or protocol-bridging systems, UniChat is purely API-based, r
 The system provides a centralized dashboard where conversations from multiple platforms can be viewed, managed, and stored in a structured manner.
 ________________________________________
 🎯 Problem Statement
+
 Organizations, small businesses, and educational institutions often communicate with clients or students through multiple messaging platforms such as:
 •	WhatsApp
 •	Facebook Messenger
@@ -25,6 +26,21 @@ UniChat was developed to provide:
 unified messaging solution.
 ________________________________________
 🏗 System Architecture
+
+#Architecture Diagram
+<img width="1090" height="613" alt="image" src="https://github.com/user-attachments/assets/fa380f08-83be-4bcf-82bc-d523be7f24e4" />
+
+#ERD Diagram
+<img width="504" height="379" alt="image" src="https://github.com/user-attachments/assets/6ac7713c-a232-48f7-9f03-02846f93adee" />
+#DFD Diagram
+<img width="739" height="556" alt="image" src="https://github.com/user-attachments/assets/5120bb63-533f-4f58-a53b-1ff4f0839390" />
+
+#Sequence Diagram
+<img width="398" height="593" alt="image" src="https://github.com/user-attachments/assets/f6fe97c6-7737-449f-98ec-1d63dbed6cbc" />
+#Class Diagram
+<img width="792" height="445" alt="image" src="https://github.com/user-attachments/assets/414575be-1e9e-47a6-9358-a2162a598b75" />
+
+
 UniChat follows a client-server architecture and is completely API-driven.
 🔹 Frontend
 •	React / React Native (mobile-friendly UI)
@@ -44,6 +60,7 @@ UniChat follows a client-server architecture and is completely API-driven.
 •	Media storage references
 ________________________________________
 🔌 Platform Integrations
+
 ✅ WhatsApp Cloud API
 •	Two-way messaging
 •	Media messages (image, document, audio)
@@ -57,6 +74,7 @@ ________________________________________
 This system uses official APIs only. No unofficial libraries or scraping mechanisms are used.
 ________________________________________
 ⚙️ Features
+
 UniChat provides the following functionality:
 •	Real-time two-way communication
 •	Unified conversation dashboard
@@ -70,6 +88,7 @@ UniChat provides the following functionality:
 •	API-based modular structure
 ________________________________________
 🔐 Security Implementation
+
 Security was implemented using a security-by-design approach:
 •	HTTPS enforcement
 •	Webhook verification tokens
@@ -81,6 +100,7 @@ Security was implemented using a security-by-design approach:
 •	Regular token rotation strategy
 ________________________________________
 🧠 Development Methodology
+
 The project followed the Agile Software Development Methodology:
 •	Iterative sprint-based development
 •	Continuous testing
@@ -106,6 +126,7 @@ The following QA metrics were considered:
 •	Mean time to recover (MTTR)
 ________________________________________
 🛠 Installation Guide
+
 1️⃣ Clone Repository
 git clone https://github.com/yourusername/unichat.git
 cd unichat
@@ -133,6 +154,7 @@ o	message_status
 o	messaging_postbacks
 ________________________________________
 📁 Project Structure
+
 backend/
  ├── routes/
  ├── controllers/
@@ -149,6 +171,7 @@ frontend/
  └── App.js
 ________________________________________
 🔄 Maintenance Plan
+
 •	Regular token rotation
 •	CVE monitoring via Dependabot
 •	MongoDB backup & restore testing
@@ -159,6 +182,7 @@ ________________________________________
 •	Security audits
 ________________________________________
 🚀 Future Enhancements
+
 UniChat is designed for extensibility. Future improvements may include:
 •	AI-powered chatbot integration
 •	Sentiment analysis
@@ -171,6 +195,7 @@ UniChat is designed for extensibility. Future improvements may include:
 •	Slack / Telegram integration
 ________________________________________
 📈 Research Contribution
+
 This project contributes academically by:
 •	Demonstrating API-based unified messaging feasibility
 •	Comparing self-hosted vs cloud-hosted trade-offs
@@ -179,6 +204,7 @@ This project contributes academically by:
 •	Exploring real-world API constraints
 ________________________________________
 🎓 Academic Context
+
 This project was developed as a Final Year Project (FYP) thesis focusing on:
 •	Unified communication systems
 •	API-based integration architecture
@@ -187,10 +213,40 @@ This project was developed as a Final Year Project (FYP) thesis focusing on:
 •	Mobile-first interface development
 ________________________________________
 🏁 Conclusion
+
 UniChat successfully demonstrates how fragmented communication platforms can be unified using official APIs within a secure, scalable, and modular architecture. The system reduces context switching, improves message management, and provides a foundation for intelligent communication systems.
 While limitations exist due to platform API policies and rate limits, the architecture is robust enough for future expansion and production-level enhancements.
 UniChat stands as a practical, customizable, and research-backed solution for unified communication.
 ________________________________________
 📄 License
+
 This project is developed for academic and research purposes.
 You may modify and extend it according to your needs.
+
+#Outputs 
+<img width="621" height="1266" alt="image" src="https://github.com/user-attachments/assets/f3419666-8971-4285-9478-22fd744e6154" />
+<img width="585" height="1200" alt="image" src="https://github.com/user-attachments/assets/2803bfdf-6a3e-4258-a32a-8ed25c5c7046" />
+<img width="626" height="1266" alt="image" src="https://github.com/user-attachments/assets/bcfc23b1-bf21-4128-87c6-39c69d441940" />
+<img width="615" height="1266" alt="image" src="https://github.com/user-attachments/assets/1e549eda-cac8-400a-97fe-16ce764960dc" />
+<img width="631" height="1266" alt="image" src="https://github.com/user-attachments/assets/bdf247b4-6496-4187-b558-b5133e04e255" />
+<img width="589" height="1200" alt="image" src="https://github.com/user-attachments/assets/5cc9cc0a-e91a-4419-a95c-d55981a7e320" />
+
+#Refrences 
+[1] Meta for Developers, “WhatsApp Cloud API Documentation,” Meta Platforms, Inc. [Online]. Available: https://developers.facebook.com/docs/whatsapp/cloud-api. [Accessed: 2025-04-07].
+[2] Meta for Developers, “Messenger Platform Documentation,” Meta Platforms, Inc. [Online]. Available: https://developers.facebook.com/docs/messenger-platform. [Accessed: 2025-04-20].
+[3] React Native Documentation. “Getting Started — React Native.” [Online]. Available: https://reactnative.dev/docs/getting-started. [Accessed: 2025-05-11].
+[4] Node.js Foundation, “Node.js Documentation.” [Online]. Available: https://nodejs.org/en/docs/. [Accessed: 2025-05-22].
+[5] Express.js, “Express — Node.js web application framework.” [Online]. Available: https://expressjs.com/. [Accessed: 2025-06-03].
+[6] MongoDB Inc., “MongoDB Manual.” [Online]. Available: https://docs.mongodb.com/manual/. [Accessed: 2025-06-14].
+[7] Socket.IO, “Socket.IO Documentation.” [Online]. Available: https://socket.io/docs/. [Accessed: 2025-06-28].
+[8] D. Bradley et al., “JSON Web Token (JWT),” RFC 7519, Internet Engineering Task Force (IETF), May 2015. [Online]. Available: https://tools.ietf.org/html/rfc7519. [Accessed: 2025-07-04].
+[9] D. Hardt, “The OAuth 2.0 Authorization Framework,” RFC 6749, Internet Engineering Task Force (IETF), Oct. 2012. [Online]. Available: https://tools.ietf.org/html/rfc6749. [Accessed: 2025-07-15].
+[10] Postman Inc., “Postman Documentation.” [Online]. Available: https://learning.postman.com/docs/. [Accessed: 2025-07-23].
+[11] GitHub, “GitHub Actions Documentation.” [Online]. Available: https://docs.github.com/actions. [Accessed: 2025-07-30].
+[12] OWASP, “OWASP Top Ten — The Ten Most Critical Web Application Security Risks.” [Online]. Available: https://owasp.org/www-project-top-ten/. [Accessed: 2025-08-02].
+[13] Chatwoot, “Chatwoot Documentation (Open-Source Customer Support).” [Online]. Available: https://www.chatwoot.com/docs. [Accessed: 2025-08-10].
+[14] Twilio, “Twilio Conversations API (for comparison).” [Online]. Available: https://www.twilio.com/docs/conversations. [Accessed: 2025-08-18].
+
+
+
+
